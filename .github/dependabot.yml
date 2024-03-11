@@ -10,10 +10,10 @@ updates:
     schedule:
       interval: 'daily'
     open-pull-requests-limit: 50
-    target-branch: modling-users 
+    target-branch: master
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 50
-    target-branch: modling-users 
+    target-branch: master
