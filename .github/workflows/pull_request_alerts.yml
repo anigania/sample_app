@@ -1,0 +1,25 @@
+name: Pull Request Alerts
+
+on:
+  pull_request_target:
+    types:
+      - opened
+    branches:
+      - master
+
+jobs:
+    slack-alert:
+    env:
+      SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/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'
+      SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.actor, '[bot]') && github.event.pull_request.base.ref == 'master' }}
+    steps:
+      - name: Pull Request Alerts
+        id: slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {
+              "text": "${{ github.event.pull_request.html_url || github.event.head_commit.url }} By: ${{ github.actor }}"
+            }
