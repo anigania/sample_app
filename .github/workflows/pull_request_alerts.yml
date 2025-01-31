@@ -7,11 +7,9 @@ on:
     branches:
       - master
 
+
 jobs:
-  send-slack-alert:
-    env:
-      SLACK_WEBHOOK_URL: ${{ "https://hooks.slack.com/services/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" }}
-      SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+  build:
     runs-on: ubuntu-latest
     if: ${{ !contains(github.actor, '[bot]') && github.event.pull_request.base.ref == 'master' }}
     steps:
@@ -32,4 +30,6 @@ jobs:
                 }
               ]
             }
-  
+        env:
+          SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/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'
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
