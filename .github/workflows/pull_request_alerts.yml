@@ -9,17 +9,27 @@ on:
 
 jobs:
   send-slack-alert:
-    name: Post a message in a channel
-    uses: slackapi/slack-github-action@v2.0.0
+    env:
+      SLACK_WEBHOOK_URL: ${{ "https://hooks.slack.com/services/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" }}
+      SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+    runs-on: ubuntu-latest
     if: ${{ !contains(github.actor, '[bot]') && github.event.pull_request.base.ref == 'master' }}
-    with:
-      webhook: 'https://hooks.slack.com/services/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'
-      webhook-type: incoming-webhook
-      payload: |
-        text: "${{ github.event.pull_request.html_url || github.event.head_commit.url }} By: ${{ github.actor }}"
-        blocks:
-          - type: "section"
-            text:
-              type: "mrkdwn"
-              text: "${{ github.event.pull_request.html_url || github.event.head_commit.url }} By: ${{ github.actor }}"
- 
+    steps:
+      - name: Pull Request Alerts
+        id: slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {
+              "text": "${{ github.event.pull_request.html_url || github.event.head_commit.url }} By: ${{ github.actor }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "${{ github.event.pull_request.html_url || github.event.head_commit.url }} By: ${{ github.actor }}"
+                  }
+                }
+              ]
+            }
+  
