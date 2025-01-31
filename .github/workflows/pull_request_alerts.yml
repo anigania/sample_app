@@ -8,9 +8,9 @@ on:
       - master
 
 jobs:
-    slack-alert:
+  slack-alert:
     env:
-      SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/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'
+      SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/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'
       SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
     runs-on: ubuntu-latest
     if: ${{ !contains(github.actor, '[bot]') && github.event.pull_request.base.ref == 'master' }}
