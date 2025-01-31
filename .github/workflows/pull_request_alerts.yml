@@ -8,16 +8,14 @@ on:
       - master
 
 jobs:
-  slack-alert:
-    env:
-      SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/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'
-      SLACK_WEBHOOK_TYPE: incoming-webhook
-    runs-on: ubuntu-latest
+  - name: Post a message in a channel
+    uses: slackapi/slack-github-action@v2.0.0
     if: ${{ !contains(github.actor, '[bot]') && github.event.pull_request.base.ref == 'master' }}
-    steps:
-      - name: Pull Request Alerts
-        id: slack
-        uses: slackapi/slack-github-action@v2.0.0
-        with:
-          payload: |
-            "text": "${{ github.event.pull_request.html_url || github.event.head_commit.url }} By: ${{ github.actor }}"
+    with:
+      webhook: 'https://hooks.slack.com/services/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'
+      webhook-type: incoming-webhook
+      payload: |
+        text: "${{ github.event.pull_request.html_url || github.event.head_commit.url }} By: ${{ github.actor }}"
+ 
+              
+ 
