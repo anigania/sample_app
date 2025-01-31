@@ -23,6 +23,9 @@ Next, migrate the database:
 
 ```
 $ rails db:migrate
+
+
+
 ```
 
 Finally, run the test suite to verify that everything is working correctly:
