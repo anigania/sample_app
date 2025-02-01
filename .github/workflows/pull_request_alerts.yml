@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.actor, '[bot]') && github.event.pull_request.base.ref == 'master' }}
+    if: ${{ !contains(github.actor, '[bot]') && github.event.pull_request.base.ref == 'master' && github.event.pull_request.draft == false }}
     steps:
       - name: Post a message in a channel
         uses: slackapi/slack-github-action@v2.0.0
